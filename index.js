@@ -1,54 +1,40 @@
-// Get DOM elements 
-const medicineNameInput = document.getElementById('medicine-name'); 
-const medicineDetails = document.getElementById('medicine-details');
-const orderButton = document.getElementById('order');
-const ordersSection = document.getElementById('orders');
-
 // API URL
-const apiURL = 'https://api.example.com/medicines';
+let info = []
+document.addEventListener('DOMContentLoaded', function() {
+  fetch('http://localhost:3000/drugs')
+      .then(response => response.json())
+      .then(drugs => {
+          info = drugs
+          drugDetails(info[0])
+      })
+});
 
 
 // Function to fetch medicine details
-async function getMedicineDetails(name) {
+ async function drugDetails(name) {
 
-  // API request 
-  const response = await fetch(apiURL + '?medicine=' + name);
-  
-  // Parse response data
-  const details = await response.json(); 
-  
-  // Display details  
-  displayMedicineDetails(details);
-
+  const drugDetails = document.getElementById('drugDetails')
+  drugDetails.innerHTML = `
+  <h3>${name.name}</h3>
+  <p>${name.usage}</p>
+  <p${name.type}"></p>
+  <p>${name.sideEffects}</p>
+  `;
 }
 
 // Display medicine details  
-function displayMedicineDetails(details) {
+function displayDrugDetails() {
 
-  medicineDetails.innerText = '';
-  
-  // Add medicine details to DOM
-  const name = document.createElement('div');
-  name.innerText = details.name;
-  medicineDetails.appendChild(name);
-  
-  // Other details
-  medicineDetails.appendChild(/*...other details...*/);
-
+  let searchForm = document.querySelector('input')
+  searchForm.addEventListener('submit', () => {
+        // Get entered medicine name
+    const name = medicineNameInput.value; 
+    
+    drugDetails(name)
+})
 }
 
-
 // Event listener for search form submit  
-searchForm.addEventListener('submit', event => {
-
-  event.preventDefault();
-  
-  // Get entered medicine name
-  const name = medicineNameInput.value; 
-  
-  getMedicineDetails(name);
-
-});
 
 
 // Handle order button click
