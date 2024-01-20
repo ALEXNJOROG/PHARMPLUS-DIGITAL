@@ -1,0 +1,32 @@
+[
+    {
+      "name": "Metformin",
+      "type": "Biguanide",
+      "usage": "Improves insulin sensitivity and lowers blood sugar in diabetic patients",
+      "sideEffects": "Nausea, diarrhea, abdominal pain"
+    },
+    {
+      "name": "Losartan", 
+      "type": "Angiotensin II receptor blocker",
+      "usage": "Lowers blood pressure by blocking a hormone that narrows blood vessels",
+      "sideEffects": "Dizziness, fatigue, muscle cramps, diarrhea"
+    },
+    {
+      "name": "Glimepiride",
+      "type": "Sulfonylurea",
+      "usage": "Increases insulin production from pancreas to lower blood sugar",
+      "sideEffects": "Hypoglycemia, headaches, nausea, weight gain"
+    },
+    {
+      "name": "Amlodipine",
+      "type": "Calcium channel blocker", 
+      "usage": "Relaxes blood vessels to lower blood pressure",
+      "sideEffects": "Swelling, flushing, fatigue, headache"
+    },
+    {
+      "name": "Insulin",
+      "type": "Hormone",
+      "usage": "Lowers high blood sugar in patients with diabetes",
+      "sideEffects": "Hypoglycemia, injection site reactions, weight gain"
+    }
+  ]
