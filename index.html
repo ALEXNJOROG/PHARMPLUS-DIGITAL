@@ -6,39 +6,96 @@
   <title>PHARMPLUS-DIGITAL</title>
  <link rel="stylesheet"
  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" >
+ <link rel="stylesheet" 
+ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <style>
+  #like-btn {
+  border: none;
+  color: rgb(0, 0, 0);
+  padding: 10px 22px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 25px;
+  background-color: rgb(200, 200, 200);
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  }
+  body{
+    background-color: floralwhite;
+  }
+  h1
+  {
+    color: floralwhite;
+    background-color: rgb(132, 132, 132); 
+    padding: 10px 80px 10px 80px;
+    border-radius: 2px;
+    border-bottom: solid;
+    border-width: 1px;
+    position: center;
+  }
+  #cecil{
+    padding: 10px 40px 20px 7px;
+    border-style: solid;
+    border-width: 0em;
+    border-radius: 25px;
+    background-color: floralwhite;
+    box-shadow: 1px 1px 2px 2px rgb(186, 182, 182);
+  }
+</style>
 </head>
-
 <body>
-  <div class="container"></div>
-  <h1 class="display-4 mb-4">Fetch Drug Details For:</h1>
+  <h1 class="display-4 mb-4">High blood pressure and diabetes explained</h1>
+  <div class="container">
+  <div id="cecil">
+  <p>Diabetes is a chronic, metabolic disease characterized by elevated levels of blood glucose (or blood sugar), which leads over time to serious damage to the heart, blood vessels, eyes, kidneys and nerves. The most common is type 2 diabetes, usually in adults, which occurs when the body becomes resistant to insulin or doesn't make enough insulin. In the past 3 decades the prevalence of type 2 diabetes has risen dramatically in countries of all income levels. Type 1 diabetes, once known as juvenile diabetes or insulin-dependent diabetes, is a chronic condition in which the pancreas produces little or no insulin by itself. For people living with diabetes, access to affordable treatment, including insulin, is critical to their survival. There is a globally agreed target to halt the rise in diabetes and obesity by 2025. 
+
+    About 422 million people worldwide have diabetes, the majority living in low-and middle-income countries, and 1.5 million deaths are directly attributed to diabetes each year. Both the number of cases and the prevalence of diabetes have been steadily increasing over the past few decades. </p>
+  <p>Hypertension (high blood pressure) is when the pressure in your blood vessels is too high (140/90 mmHg or higher). It is common but can be serious if not treated.People with high blood pressure may not feel symptoms. The only way to know is to get your blood pressure checked.
+    Things that increase the risk of having high blood pressure include:older, age, genetics, ,being overweight or obese, not being physically active, high-salt diet or even drinking too much alcohol
+    Lifestyle changes like eating a healthier diet, quitting tobacco and being more active can help lower blood pressure. Some people may still need to take medicines.
+    
+    Blood pressure is written as two numbers. The first (systolic) number represents the pressure in blood vessels when the heart contracts or beats. The second (diastolic) number represents the pressure in the vessels when the heart rests between beats.
+    
+    Hypertension is diagnosed if, when it is measured on two different days, the systolic blood pressure readings on both days is ≥140 mmHg and/or the diastolic blood pressure readings on both days is ≥90 mmHg.</p>
+    <p>Each button contains informaton about drugs that can help someone you know. We hope this information can help save a life.</p>
+  </div>
   <div class="d-flex">
     <button class="btn btn-primary mr-4 " id="getName">HBP</button>
     <button class="btn btn-success mr-4 " id="getDrugs">Diabetes</button>
     <button class="btn btn-warning mr-4 " id="getPosts">HBP $ Diabetes</button>
   </div>
-  <hr>
   <div id="output"></div>
-  <form id="addFeedback">
-    
-      <div class="form-group">
-       <textarea id="body" class="form-control"
-        placeholder="body"></textarea>
-     </div>
-     <input type="submit" class="btn btn-secondary" value="submit">
-    
-  </form>
-  </div>
-
+  <button id="like-btn" onclick="toggleLike()">Like</button>
+  <span id="like-count"></span>
   <script>
-
     document.getElementById("getName").addEventListener('click', getName);
     document.getElementById("getDrugs").addEventListener('click', getDrugs);
     document.getElementById("getPosts").addEventListener('click', getPosts);
-    document.getElementById("addFeedback").addEventListener('submit', addFeed);
+    
+    let data = {
+  "likes": 0
+}
 
+function toggleLike() {
+  let likeBtn = document.getElementById("like-btn");
+  let likeCount = document.getElementById("like-count");
+
+  if (likeBtn.innerHTML == "Like") {
+    likeBtn.innerHTML = "Dislike";
+    data.likes++;
+    likeCount.innerHTML = data.likes + " like(s)";
+  } else {
+    likeBtn.innerHTML = "Like";
+    data.likes--;
+    likeCount.innerHTML = data.likes + " like(s)";
+  }
+}
 
     function getName(){
-      fetch('hypertension.json')
+      fetch('http://localhost:3000/hbp')
       .then((res) => res.json())
       .then((data) => {
         let output = "<h2 class='mb-4'> Hypertension Drugs</h2";
@@ -50,16 +107,15 @@
               <li class="list-group item">Type: ${drug.type}</li>
               <li class="list-group item">Usage: ${drug.usage}</li>
               <li class="list-group item">Effects: ${drug.sideEffects}</li>
-              </ul>
+              </ul
             </div>
-
             `;
           })
         document.getElementById("output").innerHTML = output;
       })
     }
     function getDrugs(){
-      fetch('diabetes.json')
+      fetch('http://localhost:3000/diabetes')
       .then((res) => res.json())
       .then((data) => {
         let output = "<h2 class='mb-4'>Diabetes Drugs</h2";
@@ -75,17 +131,13 @@
             </div>
 
           `;
-
         });
         document.getElementById('output').innerHTML = output;
-
       }) 
-    
-    
     }
 
     function getPosts(){
-      fetch('both.json')
+      fetch('http://localhost:3000/hbp&diabetes')
       .then((res) => res.json())
       .then((data) => {
         let output = "<h2 class='mb-4'> Combined Drugs</h2";
@@ -98,37 +150,14 @@
               <li class="list-group item">Usage: ${drug.usage}</li>
               <li class="list-group item">Effects: ${drug.sideEffects}</li>
               </ul>
-
-
             </div>
-
           `;
-
         });
         document.getElementById('output').innerHTML = output;
 
       }) 
-    
-    
     }
-
-    function addFeed(e){
-      e.preventDefault();
-      let title= document.getElementById('title').value;
-      let body= document.getElementById('body').value;
-
-      fetch('https://jsonplaceholder.typicode.com/posts', {
-        method: 'POST' ,
-        headers: {
-          'Accept': 'application/json, text/plain, */*',
-          'Content-type' :'application/json'
-        },
-        body:JSON.stringify ({title:title, body:body})
-      })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-    }
-
   </script>
+  </div>
 </body>
 </html>
